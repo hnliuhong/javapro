@@ -1,13 +1,12 @@
 package cn.ssm.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 // 连接数据操作 （驱动、账号、密码、连接字符串）
 // 工具类:最好是类模式或者是单例模式
 public class JdbcUtils {
-    private static String url = "jdbc:mysql://localhost:3306/demo";
+//    private static final double PI = 3.14;
+    private static String url = "jdbc:mysql://localhost:3306/demo?characterEncoding=UTF-8";
     private static String username = "root";
     private static String password = "root";
     // 构造方法,此方法默认调用,如果构造方法私有,则说明不支持对象创建,则采用类模式
@@ -32,6 +31,26 @@ public class JdbcUtils {
             return DriverManager.getConnection(url,username,password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void close(Connection conn, PreparedStatement statement){
+        // 关闭连接
+        try {
+            if (statement!=null && !statement.isClosed()){
+                statement.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (conn!=null && !conn.isClosed()){
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
