@@ -35,23 +35,37 @@ public class JdbcUtils {
     }
 
     public static void close(Connection conn, PreparedStatement statement){
-        // 关闭连接
+        close(conn,statement,null);
+    }
+
+    public static void close(Connection conn, PreparedStatement statement,ResultSet rs){
         try {
-            if (statement!=null && !statement.isClosed()){
-                statement.close();
+            if (rs!=null && !rs.isClosed()){
+                rs.close();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
+            // 关闭连接
             try {
-                if (conn!=null && !conn.isClosed()){
-                    conn.close();
+                if (statement!=null && !statement.isClosed()){
+                    statement.close();
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            }
+            }finally {
+                try {
+                    if (conn!=null && !conn.isClosed()){
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
+            }
         }
+
+
     }
 
     public static void main(String[] args) {

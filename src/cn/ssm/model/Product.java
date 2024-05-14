@@ -5,7 +5,18 @@ import java.util.Date;
 // Proudct 类 对应 数据库的Product表
 // Product对象 ==> Product表记录
 // Product 属性 ==> Product 表的字段
-public class Product {
+public class Product extends Object {
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 
     private Integer id;
     private String name;
