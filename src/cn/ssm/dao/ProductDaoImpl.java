@@ -10,32 +10,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImpl
+public class ProductDaoImpl extends BaseDaoImpl
 {   // 体现封装思想
     public int save(Product product){  // model类对数据进行封装
         String sql = "insert into product (name,price,remark) values (?,?,?)";
-        // 获取conn连接对象
-        Connection connection = null;
-        PreparedStatement statement = null;
-        // 预编辑SQL语句
-        try {
-            connection = JdbcUtils.getConnection();
-            statement = connection.prepareStatement(sql);
-            // 设置参数
-            statement.setString(1,product.getName());
-            statement.setDouble(2,product.getPrice());
-            statement.setString(3,product.getRemark());
-            System.out.println(100);
-            // 执行sql语句,并且返回受影响的行数
-            return statement.executeUpdate();
+//        Object[] param
+        return super.update(sql,new Object[]{product.getName(),product.getPrice(),product.getRemark()});
+    }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally { // 正常、异常、return之后都会执行
-            System.out.println("ProductDaoImpl.save");
-            JdbcUtils.close(connection,statement);
+    public int delete(int id){
+        String sql = "delete from product where id = ?";
+        return super.update(sql,new Object[]{id});
+    }
 
-        }
+    public int update(Product product){
+        String sql = "update product set name =?,price=?,remark=? where id=?";
+        return super.update(sql,new Object[]{product.getName(),product.getPrice(),
+                product.getRemark(),product.getId()});
     }
 
     public List<Product> queryByName(String keyword){
@@ -73,13 +64,15 @@ public class ProductDaoImpl
 
     public static void main(String[] args) {
         ProductDaoImpl productDao = new ProductDaoImpl();
+        productDao.delete(2);
+
         // 数据应该从 前端 --> 业务逻辑 --> 数据访问
-//        Product product = new Product();
-//        product.setName("GPU笔记本2");
-//        product.setPrice(8888.99);
-//        product.setRemark("AI智能化,支持GPU");
-//        int res = productDao.save(product);
-//        System.out.println(res);
+        Product product = new Product();
+        product.setId(3);
+        product.setName("Iphone6");
+        product.setPrice(7888.99);
+        product.setRemark("AI手机智能化,支持GPU");
+        int res = productDao.update(product);
         // 查询测试
         List<Product> proList = productDao.queryByName("");
         for(Product p:proList){
