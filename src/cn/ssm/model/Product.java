@@ -23,7 +23,6 @@ public class Product extends Object {
     private Double price;
     private Date date;
     private String remark;
-
     public Integer getId() {
         return id;
     }
