@@ -5,10 +5,10 @@ import java.sql.*;
 // 连接数据操作 （驱动、账号、密码、连接字符串）
 // 工具类:最好是类模式或者是单例模式
 public class JdbcUtils {
-//    private static final double PI = 3.14;
-    private static String url = "jdbc:mysql://localhost:3306/demo?characterEncoding=UTF-8";
+//    private static final double PI = 3.14;  rm-cn-em93nmniw000n6yo.rwlb.rds.aliyuncs.com
+    private static String url = "jdbc:mysql://rm-cn-em93nmniw000n6yo.rwlb.rds.aliyuncs.com:3306/demo?characterEncoding=UTF-8";
     private static String username = "root";
-    private static String password = "root";
+    private static String password = "Xkzjpx@240515#Java";
     // 构造方法,此方法默认调用,如果构造方法私有,则说明不支持对象创建,则采用类模式
     private JdbcUtils(){
         System.out.println("JdbcUtils.JdbcUtils");

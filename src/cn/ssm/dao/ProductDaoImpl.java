@@ -44,6 +44,7 @@ public class ProductDaoImpl
         // 获取conn连接对象
         Connection connection = null;
         PreparedStatement statement = null;
+        // 结果集 (对应数据表)
         ResultSet rs = null;
         // 预编辑SQL语句
         try {
@@ -80,7 +81,7 @@ public class ProductDaoImpl
 //        int res = productDao.save(product);
 //        System.out.println(res);
         // 查询测试
-        List<Product> proList = productDao.queryByName("笔记本");
+        List<Product> proList = productDao.queryByName("");
         for(Product p:proList){
             System.out.println(p);
         }
