@@ -1,11 +1,16 @@
 package cn.ssm.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 // Proudct 类 对应 数据库的Product表
 // Product对象 ==> Product表记录
 // Product 属性 ==> Product 表的字段
 public class Product extends Object {
+
+    public Product() {
+
+    }
 
     @Override
     public String toString() {
@@ -20,7 +25,7 @@ public class Product extends Object {
 
     private Integer id;
     private String name;
-    private Double price;
+    private BigDecimal price;
     private Date date;
     private String remark;
     public Integer getId() {
@@ -39,11 +44,11 @@ public class Product extends Object {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

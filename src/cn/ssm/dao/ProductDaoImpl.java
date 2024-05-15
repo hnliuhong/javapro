@@ -31,7 +31,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product>
 
     public List<Product> queryByName(String keyword){
         String sql = "select * from product where name like ?";
-        return super.query(sql,new Object[]{"%" + keyword + "%"});
+        return super.query(sql,new Object[]{"%" + keyword + "%"},Product.class);
     }
 
     public static void main(String[] args) {
@@ -52,15 +52,4 @@ public class ProductDaoImpl extends BaseDaoImpl<Product>
         }
     }
 
-    @Override
-    protected Product getRowMapper(ResultSet rs) throws SQLException {
-        // product表中的记录采用product对象来存储
-        Product product = new Product();
-        product.setId(rs.getInt("id"));
-        product.setName(rs.getString("name"));
-        product.setPrice(rs.getDouble("price"));
-        product.setRemark(rs.getString("remark"));
-        product.setDate(rs.getDate("date"));
-        return product;
-    }
 }
