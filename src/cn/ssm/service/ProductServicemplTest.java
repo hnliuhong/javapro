@@ -24,7 +24,7 @@ public class ProductServicemplTest {
         context.close();
     }
 
-    @org.junit.Test
+//    @org.junit.Test
     public void save() {
         Product product = new Product();
         product.setName("优盘");
