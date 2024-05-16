@@ -23,12 +23,12 @@ public class ProductDaoImpl
     private JdbcTemplate jdbcTemplate = null;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        System.out.println("ProductDaoImpl.setJdbcTemplate:" + jdbcTemplate);
+
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public ProductDaoImpl(){
-        System.out.println("ProductDaoImpl.ProductDaoImpl");
+
     }
 
     // 体现封装思想
