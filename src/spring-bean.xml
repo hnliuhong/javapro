@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    <!-- 此类目前还是不普通JavaBean,仅仅是交给Spring管理而已 -->
+    <bean id="aop" class="cn.ssm.base.AOPClass" />
+
+    <!-- 告知上面的aop是切面类,并且配置切入规则 -->
+    <aop:config>
+        <!-- 指定切面类 -->
+        <aop:aspect ref="aop">
+            <aop:before method="abc"
+                        pointcut="execution(* cn.ssm.service.ProductServiceImpl.*(..))" />
+        </aop:aspect>
+    </aop:config>
+
     <!-- spring 就是通过xml来管理bean/class的创建、数量、时间、销毁 (生命周期) -->
     <bean id="productService" class="cn.ssm.service.ProductServiceImpl">
         <property name="productDao" ref="productDao" />

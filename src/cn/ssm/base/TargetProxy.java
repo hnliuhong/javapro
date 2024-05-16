@@ -3,10 +3,15 @@ package cn.ssm.base;
 import sun.nio.ch.SocketOpts;
 
 // 目标对象的代理类, 目标对象和代理类都要实现相同的接口
+// 静态代理缺点: 会生成很多代理类,不方便管理和维护, 可以采用Spring AOP来实现动态代理
 public class TargetProxy implements IProxy {
 
     // 代理类,必须要有目标对象(被代理对象)
     private IProxy target = null;
+
+    public void setTarget(IProxy target) {
+        this.target = target;
+    }
 
     public TargetProxy(IProxy target){
         this.target = target;
