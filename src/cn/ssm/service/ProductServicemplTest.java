@@ -3,6 +3,7 @@ package cn.ssm.service;
 import cn.ssm.model.Product;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductServicemplTest {
@@ -32,10 +33,16 @@ public class ProductServicemplTest {
 
     @org.junit.Test
     public void delete() {
+        productService.delete(14);
     }
 
     @org.junit.Test
     public void update() {
+        Product product = new Product();
+        product.setId(9);
+        product.setName("华为运动手表");
+        product.setPrice(new BigDecimal(4999));
+        productService.update(product);
     }
 
     @org.junit.Test
