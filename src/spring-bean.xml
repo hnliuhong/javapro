@@ -7,22 +7,10 @@ http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
-    <!-- 此类目前还是不普通JavaBean,仅仅是交给Spring管理而已 -->
-    <bean id="aop" class="cn.ssm.base.AOPClass" />
-
-    <!-- 告知上面的aop是切面类,并且配置切入规则 -->
-    <aop:config>
-        <!-- 指定切面类 -->
-        <aop:aspect ref="aop">
-            <!-- 切面表达式: 切入的方法称为通知(前置与后置),被切方法称为连接点 -->
-            <aop:before method="before"
-                        pointcut-ref="pt" />
-            <!-- 后置异常通知：抛出了异常才会被切入 -->
-            <aop:after-throwing method="after_e" pointcut-ref="pt" />
-            <!-- 切面表达式,配置切入的语法规则 -->
-            <aop:pointcut id="pt" expression="execution(* cn.ssm.service.ProductServiceImpl.*(..))"/>
-        </aop:aspect>
-    </aop:config>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
     <!-- spring 就是通过xml来管理bean/class的创建、数量、时间、销毁 (生命周期) -->
     <bean id="productService" class="cn.ssm.service.ProductServiceImpl">
@@ -30,12 +18,9 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
     </bean>
 
     <bean id="productDao" class="cn.ssm.dao.ProductDaoImpl">
-        <property name="jdbcTemplate" ref="jdbcTemplate" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
             <property name="driverClass" value="com.mysql.jdbc.Driver" />

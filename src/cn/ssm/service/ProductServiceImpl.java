@@ -25,8 +25,9 @@ public class ProductServiceImpl
    public int save(Product product){
         // 前端提交了要购买的商品,此处业务逻辑可能是商品去重, 总价金额优惠....
        System.out.println("插入功能.......");
-//       Integer.parseInt("xxxx");
-        return productDao.save(product);
+       int count = productDao.save(product);
+       Integer.parseInt("xxxx");
+       return count;
    }
 
    public int delete(int id){
@@ -37,8 +38,8 @@ public class ProductServiceImpl
        return productDao.update(product);
    }
 
-   public List<Product> queryByName(String keyword){
-       return productDao.queryByName(keyword);
+   public List<Product> queryByName(String keyword,int currentPage){
+       return productDao.queryByName(keyword,currentPage);
    }
 
 }

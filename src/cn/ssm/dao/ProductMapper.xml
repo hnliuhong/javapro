@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 把sql语句,写到当前mapper文件中(此文件取代了之前DaoImpl) -->
+<mapper namespace="cn.ssm.dao.ProductDaoImpl">
+    <insert id="save" parameterType="product">
+        insert into product (name,price,remark) values (#{name},#{price},#{remark})
+    </insert>
+
+    <insert id="update" parameterType="product">
+        update product set name = #{name},price = #{price},remark = #{remark} where id = #{id}
+    </insert>
+    <!-- 如果一个参数,则赋值的变量名随意  -->
+    <insert id="delete" parameterType="int">
+        delete from product where id = #{xyz}
+    </insert>
+    <!--  session.selectList 代码可知返回的是List, 此处仅resultType需要告知存储到List里面是什么对象 -->
+    <select id="query" parameterType="java.util.HashMap" resultType="product">
+        SELECT * FROM product where name like #{keyword} LIMIT #{start},#{size};
+    </select>
+
+
+</mapper>

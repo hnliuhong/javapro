@@ -25,7 +25,7 @@ public class ProductServicemplTest {
     @org.junit.Test
     public void save() {
         Product product = new Product();
-        product.setName("优盘");
+        product.setName("优盘B");
         productService.save(product);
     }
 
@@ -45,7 +45,7 @@ public class ProductServicemplTest {
 
     @org.junit.Test
     public void queryByName() {
-        List<Product> proList = productService.queryByName("");
+        List<Product> proList = productService.queryByName("",2);
         for(Product p:proList){
             System.out.println(p);
         }

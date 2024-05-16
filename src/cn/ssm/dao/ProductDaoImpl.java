@@ -2,57 +2,45 @@ package cn.ssm.dao;
 // 数据访问层,主要完成Product数据库操作
 
 import cn.ssm.model.Product;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import java.util.*;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
- //  XML --> dtd
+//  XML --> dtd
 public class ProductDaoImpl
 {
+    // 依赖mybatis
+    private SqlSessionFactory sqlSessionFactory = null;
 
-
-    private JdbcTemplate jdbcTemplate = null;
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-
-        this.jdbcTemplate = jdbcTemplate;
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 
-    public ProductDaoImpl(){
-
-    }
-
-    // 体现封装思想
     public int save(Product product){  // model类对数据进行封装
-        String sql = "insert into product (name,price,remark) values (?,?,?)";
-        return jdbcTemplate.update(sql,new Object[]{product.getName(),product.getPrice(),product.getRemark()});
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        System.out.println(ProductDaoImpl.class.getName());
+        return sqlSession.insert(ProductDaoImpl.class.getName() + ".save",product);
     }
 
     public int delete(int id){
-        String sql = "delete from product where id = ?";
-        return jdbcTemplate.update(sql,new Object[]{id});
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        return sqlSession.delete(ProductDaoImpl.class.getName() + ".delete",id);
     }
 
     public int update(Product product){
-        String sql = "update product set name =?,price=?,remark=? where id=?";
-        return jdbcTemplate.update(sql,new Object[]{product.getName(),product.getPrice(),
-                product.getRemark(),product.getId()});
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        return sqlSession.update(ProductDaoImpl.class.getName() + ".update",product);
     }
 
-    public List<Product> queryByName(String keyword){
-        String sql = "select * from product where name like ?";
-//        return super.query(sql,new Object[]{"%" + keyword + "%"},Product.class);
-        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<Product>(Product.class),
-                new Object[]{"%" + keyword + "%"});
+    public List<Product> queryByName(String keyword,int currentPage){
+        int size = 5;
+        Map<String,Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("keyword","%" + keyword + "%");
+        hashMap.put("start",(currentPage - 1) * size);
+        hashMap.put("size",size);
+//        SELECT * FROM product where name like #{keyword} LIMIT #{start},#{size};
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        return sqlSession.selectList(ProductDaoImpl.class.getName() + ".query",hashMap);
     }
 
 }
