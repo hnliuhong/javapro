@@ -25,7 +25,7 @@ public class ProductServicemplTest {
     @org.junit.Test
     public void save() {
         Product product = new Product();
-        product.setName("优盘B");
+        product.setName("优盘D");
         productService.save(product);
     }
 
