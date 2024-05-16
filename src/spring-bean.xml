@@ -5,6 +5,9 @@
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
     <!-- spring 就是通过xml来管理bean/class的创建、数量、时间、销毁 (生命周期) -->
+    <bean id="productService" class="cn.ssm.service.ProductServiceImpl">
+        <property name="productDao" ref="productDao" />
+    </bean>
 
     <bean id="productDao" class="cn.ssm.dao.ProductDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />

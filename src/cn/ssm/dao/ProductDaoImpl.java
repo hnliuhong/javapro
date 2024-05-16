@@ -23,6 +23,7 @@ public class ProductDaoImpl
     private JdbcTemplate jdbcTemplate = null;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        System.out.println("ProductDaoImpl.setJdbcTemplate:" + jdbcTemplate);
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -52,21 +53,6 @@ public class ProductDaoImpl
 //        return super.query(sql,new Object[]{"%" + keyword + "%"},Product.class);
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper<Product>(Product.class),
                 new Object[]{"%" + keyword + "%"});
-    }
-
-    public static void main(String[] args) {
-          // 加载Spring的配置文件
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-bean.xml");
-        ProductDaoImpl productDao = context.getBean("productDao", ProductDaoImpl.class);
-//        System.out.println(productDao);
-//        Product product = new Product();  // 此数据应该前端
-//        product.setName("运动手表");
-//        product.setPrice(new BigDecimal(3333.88));
-//        product.setRemark("Spring 插入测试");
-//        productDao.save(product);
-         for(Product product:productDao.queryByName("")){
-             System.out.println(product);
-         }
     }
 
 }
